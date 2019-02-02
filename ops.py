@@ -20,8 +20,6 @@ import numpy as np
 import tensorflow as tf
 import tensorflow.contrib.slim as slim
 from tensorflow.python.framework import ops
-import cv2
-
 import tensorflow.contrib.layers as tflayers
 
 from utils import *

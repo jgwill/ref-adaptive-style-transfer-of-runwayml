@@ -1,0 +1,14 @@
+name: Adaptive Style Transfer
+description: A Style-Aware Content Loss for Real-time HD Style Transfer
+license: GPL-3.0
+python: 2.7
+cuda: 9
+entrypoint: python server.py
+files:
+  ignore:
+    - models/*
+    - data/*
+build_steps:
+  - if_gpu: pip install tensorflow-gpu==1.12.0
+  - if_cpu: pip install tensorflow==1.12.0
+  - pip install -r requirements.txt

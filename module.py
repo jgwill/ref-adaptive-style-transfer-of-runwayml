@@ -36,23 +36,23 @@ def encoder(image, options, reuse=True, name="encoder"):
         else:
             assert tf.get_variable_scope().reuse is False
         image = instance_norm(input=image,
-                              is_training=options.is_training,
+                              is_training=False,
                               name='g_e0_bn')
         c0 = tf.pad(image, [[0, 0], [15, 15], [15, 15], [0, 0]], "REFLECT")
-        c1 = tf.nn.relu(instance_norm(input=conv2d(c0, options.gf_dim, 3, 1, padding='VALID', name='g_e1_c'),
-                                      is_training=options.is_training,
+        c1 = tf.nn.relu(instance_norm(input=conv2d(c0, 32, 3, 1, padding='VALID', name='g_e1_c'),
+                                      is_training=False,
                                       name='g_e1_bn'))
-        c2 = tf.nn.relu(instance_norm(input=conv2d(c1, options.gf_dim, 3, 2, padding='VALID', name='g_e2_c'),
-                                      is_training=options.is_training,
+        c2 = tf.nn.relu(instance_norm(input=conv2d(c1, 32, 3, 2, padding='VALID', name='g_e2_c'),
+                                      is_training=False,
                                       name='g_e2_bn'))
-        c3 = tf.nn.relu(instance_norm(conv2d(c2, options.gf_dim * 2, 3, 2, padding='VALID', name='g_e3_c'),
-                                      is_training=options.is_training,
+        c3 = tf.nn.relu(instance_norm(conv2d(c2, 32 * 2, 3, 2, padding='VALID', name='g_e3_c'),
+                                      is_training=False,
                                       name='g_e3_bn'))
-        c4 = tf.nn.relu(instance_norm(conv2d(c3, options.gf_dim * 4, 3, 2, padding='VALID', name='g_e4_c'),
-                                      is_training=options.is_training,
+        c4 = tf.nn.relu(instance_norm(conv2d(c3, 32 * 4, 3, 2, padding='VALID', name='g_e4_c'),
+                                      is_training=False,
                                       name='g_e4_bn'))
-        c5 = tf.nn.relu(instance_norm(conv2d(c4, options.gf_dim * 8, 3, 2, padding='VALID', name='g_e5_c'),
-                                      is_training=options.is_training,
+        c5 = tf.nn.relu(instance_norm(conv2d(c4, 32 * 8, 3, 2, padding='VALID', name='g_e5_c'),
+                                      is_training=False,
                                       name='g_e5_bn'))
         return c5
 
@@ -95,25 +95,25 @@ def decoder(features, options, reuse=True, name="decoder"):
         r9 = residule_block(r8, num_kernels, name='g_r9')
 
         # Decode image.
-        d1 = deconv2d(r9, options.gf_dim * 8, 3, 2, name='g_d1_dc')
+        d1 = deconv2d(r9, 32 * 8, 3, 2, name='g_d1_dc')
         d1 = tf.nn.relu(instance_norm(input=d1,
                                       name='g_d1_bn',
-                                      is_training=options.is_training))
+                                      is_training=False))
 
-        d2 = deconv2d(d1, options.gf_dim * 4, 3, 2, name='g_d2_dc')
+        d2 = deconv2d(d1, 32 * 4, 3, 2, name='g_d2_dc')
         d2 = tf.nn.relu(instance_norm(input=d2,
                                       name='g_d2_bn',
-                                      is_training=options.is_training))
+                                      is_training=False))
 
-        d3 = deconv2d(d2, options.gf_dim * 2, 3, 2, name='g_d3_dc')
+        d3 = deconv2d(d2, 32 * 2, 3, 2, name='g_d3_dc')
         d3 = tf.nn.relu(instance_norm(input=d3,
                                       name='g_d3_bn',
-                                      is_training=options.is_training))
+                                      is_training=False))
 
-        d4 = deconv2d(d3, options.gf_dim, 3, 2, name='g_d4_dc')
+        d4 = deconv2d(d3, 32, 3, 2, name='g_d4_dc')
         d4 = tf.nn.relu(instance_norm(input=d4,
                                       name='g_d4_bn',
-                                      is_training=options.is_training))
+                                      is_training=False))
 
         d4 = tf.pad(d4, [[0, 0], [3, 3], [3, 3], [0, 0]], "REFLECT")
         pred = tf.nn.sigmoid(conv2d(d4, 3, 7, 1, padding='VALID', name='g_pred_c'))*2. - 1.
