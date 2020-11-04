@@ -1,3 +1,7 @@
+## Note: is used by RunwayML
+
+----
+
 # A Style-Aware Content Loss for Real-time HD Style Transfer
 ***Artsiom Sanakoyeu\*, Dmytro Kotovenko\*, Sabine Lang, Björn Ommer*, In ECCV 2018 (Oral)**
 
