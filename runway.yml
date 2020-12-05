@@ -1,5 +1,5 @@
-name: Adaptive Style Transfer
-description: A Style-Aware Content Loss for Real-time HD Style Transfer
+name: Ref Adaptive Style Transfer JG
+description: A Style-Aware Content Loss for Real-time HD Style Transfer Forked by JG
 license: GPL-3.0
 python: 2.7
 cuda: 9
