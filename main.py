@@ -128,6 +128,11 @@ parser.add_argument('--save_dir',
                     default=None,
                     help='Directory to save inference output images.'
                          'If not specified will save in the model directory.')
+parser.add_argument('--file_suffix',
+                    type=str,
+                    default='_stylized',
+                    help='Suffix to append in between ext format and fn.'
+                         'If not specified will save in the model directory.')
 parser.add_argument('--ckpt_nmbr',
                     dest='ckpt_nmbr',
                     type=int,
@@ -151,7 +156,8 @@ def main(_):
             print("Inference.")
             model.inference(args, args.inference_images_dir, resize_to_original=False,
                             to_save_dir=args.save_dir,
-                            ckpt_nmbr=args.ckpt_nmbr)
+                            ckpt_nmbr=args.ckpt_nmbr,
+                            file_suffix=args.file_suffix)
 
         if args.phase == 'inference_on_frames' or args.phase == 'test_on_frames':
             print("Inference on frames sequence.")
@@ -159,7 +165,8 @@ def main(_):
                                   path_to_folder=args.inference_images_dir[0],
                                   resize_to_original=False,
                                   to_save_dir=args.save_dir,
-                                  ckpt_nmbr = args.ckpt_nmbr)
+                                  ckpt_nmbr = args.ckpt_nmbr,
+                                  file_suffix=args.file_suffix)
         sess.close()
 
 if __name__ == '__main__':

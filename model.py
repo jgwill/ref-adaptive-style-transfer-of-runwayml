@@ -375,7 +375,7 @@ class Artgan(object):
 
     # Don't use this function yet.
     def inference_video(self, args, path_to_folder, to_save_dir=None, resize_to_original=True,
-                        use_time_smooth_randomness=True, ckpt_nmbr=None):
+                        use_time_smooth_randomness=True, ckpt_nmbr=None,file_suffix= "_stylized"):
         """
         Run inference on the video frames. Original aspect ratio will be preserved.
         Args:
@@ -453,12 +453,12 @@ class Artgan(object):
             else:
                 pass
 
-            scipy.misc.imsave(os.path.join(to_save_dir, img_name[:-4] + "_stylized.jpg"), img)
+            scipy.misc.imsave(os.path.join(to_save_dir, img_name[:-4] + file_suffix +".jpg"), img)
 
         print("Inference is finished.")
 
     def inference(self, args, path_to_folder, to_save_dir=None, resize_to_original=True,
-                  ckpt_nmbr=None):
+                  ckpt_nmbr=None,file_suffix= "_stylized"):
 
         init_op = tf.global_variables_initializer()
         self.sess.run(init_op)
@@ -507,7 +507,8 @@ class Artgan(object):
             else:
                 pass
             img_name = os.path.basename(img_path)
-            scipy.misc.imsave(os.path.join(to_save_dir, img_name[:-4] + "_stylized.jpg"), img)
+            #@STCGoal HERE TO APPEND SUFFIX TO FILE
+            scipy.misc.imsave(os.path.join(to_save_dir, img_name[:-4] + file_suffix +".jpg"), img)
 
         print("Inference is finished.")
 
@@ -525,9 +526,9 @@ class Artgan(object):
 
     def load(self, checkpoint_dir, ckpt_nmbr=None):
         if ckpt_nmbr:
-            if len([x for x in os.listdir(checkpoint_dir) if str(ckpt_nmbr) in x]) > 0:
+            if len([x for x in os.listdir(checkpoint_dir) if ("ckpt-" + str(ckpt_nmbr)) in x]) > 0:
                 print(" [*] Reading checkpoint %d from folder %s." % (ckpt_nmbr, checkpoint_dir))
-                ckpt_name = [x for x in os.listdir(checkpoint_dir) if str(ckpt_nmbr) in x][0]
+                ckpt_name = [x for x in os.listdir(checkpoint_dir) if ("ckpt-" + str(ckpt_nmbr)) in x][0]
                 ckpt_name = '.'.join(ckpt_name.split('.')[:-1])
                 self.initial_step = ckpt_nmbr
                 print("Load checkpoint %s. Initial step: %s." % (ckpt_name, self.initial_step))
