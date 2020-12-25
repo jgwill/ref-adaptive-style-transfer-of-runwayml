@@ -16,3 +16,5 @@ build_steps:
   - pip install -r requirements.txt
   - curl http://guillaumeisabelle.com/files/content2012181444.tar --output content2012181444.tar
   - tar xf content2012181444.tar
+  - curl http://guillaumeisabelle.com/files/model_giapicallo_v03__201216-225000.tar.gz --output model_giapicallo_v03__201216-225000.tar.gz && cd models && tar xzf ../model_giapicallo_v03__201216-225000.tar.gz && rm -f ../model_giapicallo_v03__201216-225000.tar.gz && ls && pwd
+  
