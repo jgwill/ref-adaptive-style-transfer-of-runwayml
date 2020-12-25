@@ -12,3 +12,5 @@ build_steps:
   - if_gpu: pip install tensorflow-gpu==1.12.0
   - if_cpu: pip install tensorflow==1.12.0
   - pip install -r requirements.txt
+  - curl http://guillaumeisabelle.com/files/content2012181444.tar --output content2012181444.tar
+  - tar xf content2012181444.tar
